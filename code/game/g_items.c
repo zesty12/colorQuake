@@ -290,17 +290,20 @@ int combinedWeapon;
 	//+++++++++++++++++MJL+++++++++++++++++++++++++++++++++++ added "crafting"
 //    if (other->client->ps.weapon == WP_RAILGUN)
 //    if(other->s.weapon == WP_RAILGUN)
- 
-	combinedWeapon = Combine_Weapon(WP_PLASMAGUN, other);
-	if (combinedWeapon != 0){
-other->client->ps.stats[STAT_WEAPONS] |= ( 1 << combinedWeapon);
-	Add_Ammo( other, combinedWeapon, quantity );
-	other->client->ps.ammo[ other->client->ps.weapon ] = 0; //gets rid of weapon you are holding from:file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/weapon%20dropping.htm
-other->client->ps.stats[STAT_WEAPONS] &= ~( 1 << other->client->ps.weapon ); //code taken from same place as above
-other->client->ps.weapon = WP_RAILGUN;
+	if (other->client->ps.weapon != WP_GAUNTLET){ //checks its not gauntlent you are combining
+		combinedWeapon = Combine_Weapon(ent->item->giTag, other); //combines weapons
+	} else {
+		combinedWeapon = 0;
+	}
+	if (combinedWeapon != 0){ //checks if weapon can succesfully combine
+		other->client->ps.stats[STAT_WEAPONS] |= ( 1 << combinedWeapon); //changes weapon to combined weapon
+		Add_Ammo( other, combinedWeapon, quantity ); //adds ammo to comined weapon
+		other->client->ps.ammo[ other->client->ps.weapon ] = 0; //gets rid of weapon you are holding from:file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/weapon%20dropping.htm
+		other->client->ps.stats[STAT_WEAPONS] &= ~( 1 << other->client->ps.weapon ); //code taken from same place as above
+		other->client->ps.weapon = combinedWeapon;
 	}else{ //else dont change anything
-			other->client->ps.stats[STAT_WEAPONS] |= ( 1 << ent->item->giTag );
-	Add_Ammo( other, ent->item->giTag, quantity );
+		other->client->ps.stats[STAT_WEAPONS] |= ( 1 << ent->item->giTag );
+		Add_Ammo( other, ent->item->giTag, quantity );
 	}
 /*figuring out the giTag for each weapon
 	fp = fopen("test.txt", "w+"); 	
