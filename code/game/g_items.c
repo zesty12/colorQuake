@@ -233,10 +233,29 @@ int Pickup_Ammo (gentity_t *ent, gentity_t *other)
 
 //======================================================================
 
+int Combine_Weapon (int weapon, gentity_t *ent){ // MJL Method to combine weapons
+	int heldWeapon = ent->client->ps.weapon;
+	switch (weapon){ //checks int weapon
+		case WP_PLASMAGUN:
+			switch (heldWeapon){ //checks held weapon
+				case WP_ROCKET_LAUNCHER:
+					return WP_RAILGUN;
+			}
+		case WP_ROCKET_LAUNCHER:
+			switch (heldWeapon)
+				case WP_PLASMAGUN:
+					return WP_RAILGUN;
+
+	}
+return 0;
+}
+
+
 
 int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 	int		quantity;
-
+int combinedWeapon;
+//	 FILE *fp; uncomment when checking for giTag
 	if ( ent->count < 0 ) {
 		quantity = 0; // None for you, sir!
 	} else {
@@ -268,19 +287,40 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 
 
 ++++++++++++++++++++++++++++++++++++++*/ 
-	//+++++++++++++++++MJL+++++++++++++++++++++++++++++++++++ added "crafting" (probs will chnage how this works)
+	//+++++++++++++++++MJL+++++++++++++++++++++++++++++++++++ added "crafting"
 //    if (other->client->ps.weapon == WP_RAILGUN)
 //    if(other->s.weapon == WP_RAILGUN)
  
-	if ((ent->item->giTag == WP_PLASMAGUN && other->client->ps.weapon == WP_ROCKET_LAUNCHER) || ent->item->giTag == WP_ROCKET_LAUNCHER && other->client->ps.weapon == WP_PLASMAGUN){ //checks if picking up plasma gun and already have rocketlauncher
-	other->client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_RAILGUN ); //if both are true changes it to a railgun
-	Add_Ammo( other, WP_RAILGUN, quantity );
+	combinedWeapon = Combine_Weapon(WP_PLASMAGUN, other);
+	if (combinedWeapon != 0){
+other->client->ps.stats[STAT_WEAPONS] |= ( 1 << combinedWeapon);
+	Add_Ammo( other, combinedWeapon, quantity );
 	other->client->ps.ammo[ other->client->ps.weapon ] = 0; //gets rid of weapon you are holding from:file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/weapon%20dropping.htm
 other->client->ps.stats[STAT_WEAPONS] &= ~( 1 << other->client->ps.weapon ); //code taken from same place as above
+other->client->ps.weapon = WP_RAILGUN;
 	}else{ //else dont change anything
 			other->client->ps.stats[STAT_WEAPONS] |= ( 1 << ent->item->giTag );
 	Add_Ammo( other, ent->item->giTag, quantity );
 	}
+/*figuring out the giTag for each weapon
+	fp = fopen("test.txt", "w+"); 	
+	fprintf(fp, "Gauntlet %d ",WP_GAUNTLET);
+	fprintf(fp, "Nailgun %d ",WP_MACHINEGUN);
+	fprintf(fp, "Shotgun %d ",WP_SHOTGUN);
+	fprintf(fp, "Railgun %d ",WP_RAILGUN);
+	fprintf(fp, "Lightning %d ",WP_LIGHTNING);
+	fprintf(fp, "Grenade launcher %d ",WP_GRENADE_LAUNCHER);
+	fprintf(fp, "Rocket Launcher %d ",WP_ROCKET_LAUNCHER);
+	fprintf(fp, "Plasma gun %d ",WP_PLASMAGUN);
+	fprintf(fp, "Shotgun %d ",WP_SHOTGUN);
+	fprintf(fp, "BFG %d ",WP_BFG);
+	fprintf(fp, "Grappling hook %d ",WP_GRAPPLING_HOOK);
+//	fprintf(fp, "Proximity launcher %d ",WP_PROX_LAUNCHER);
+//	fprintf(fp, "Chaingun %d ",WP_CHAINGUN);
+	fclose(fp);
+
+*/
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		if (ent->item->giTag == WP_GRAPPLING_HOOK)
 		other->client->ps.ammo[ent->item->giTag] = -1; // unlimited ammo
