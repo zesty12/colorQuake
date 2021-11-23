@@ -233,29 +233,63 @@ int Pickup_Ammo (gentity_t *ent, gentity_t *other)
 
 //======================================================================
 
-int Combine_Weapon (int weapon, gentity_t *ent){ // MJL Method to combine weapons
-	int heldWeapon = ent->client->ps.weapon;
+/* MJL Method to combine weapons
+ * weapon: the weapon that was just picked up
+ * heldWeapon: the weapon being held
+ * returns weapon: it combines into 0 if it doesnt combine
+ */
+int Combine_Weapon (int weapon,int heldWeapon){ 
+//	int heldWeapon = ent->client->ps.weapon;
 	switch (weapon){ //checks int weapon
 		case WP_PLASMAGUN:
 			switch (heldWeapon){ //checks held weapon
 				case WP_ROCKET_LAUNCHER:
-					return WP_RAILGUN;
+					return WP_RAILGUN; //returns finished weapon
+				default:
+					return 0;
 			}
 		case WP_ROCKET_LAUNCHER:
-			switch (heldWeapon)
+			switch (heldWeapon){
 				case WP_PLASMAGUN:
 					return WP_RAILGUN;
-
+				case WP_LIGHTNING:
+					return WP_GRENADE_LAUNCHER;
+				default:
+					return 0;
+			}
+		case WP_SHOTGUN:
+			switch (heldWeapon){
+				case WP_RAILGUN:
+					return WP_LIGHTNING;
+				default:
+					return 0;
+			}
+		case WP_RAILGUN:
+			switch (heldWeapon){
+				case WP_SHOTGUN:
+					return WP_LIGHTNING;
+				default:
+					return 0;
+			}
+		case WP_LIGHTNING:
+			switch (heldWeapon){
+				case WP_ROCKET_LAUNCHER:
+					return WP_GRENADE_LAUNCHER;
+				default:
+					return 0;
+			}
+		default:
+			return 0;
 	}
 return 0;
 }
 
 
 
+
 int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 	int		quantity;
 int combinedWeapon;
-//	 FILE *fp; uncomment when checking for giTag
 	if ( ent->count < 0 ) {
 		quantity = 0; // None for you, sir!
 	} else {
@@ -288,10 +322,8 @@ int combinedWeapon;
 
 ++++++++++++++++++++++++++++++++++++++*/ 
 	//+++++++++++++++++MJL+++++++++++++++++++++++++++++++++++ added "crafting"
-//    if (other->client->ps.weapon == WP_RAILGUN)
-//    if(other->s.weapon == WP_RAILGUN)
 	if (other->client->ps.weapon != WP_GAUNTLET){ //checks its not gauntlent you are combining
-		combinedWeapon = Combine_Weapon(ent->item->giTag, other); //combines weapons
+		combinedWeapon = Combine_Weapon(ent->item->giTag, other->client->ps.weapon); //combines weapons
 	} else {
 		combinedWeapon = 0;
 	}
@@ -300,29 +332,11 @@ int combinedWeapon;
 		Add_Ammo( other, combinedWeapon, quantity ); //adds ammo to comined weapon
 		other->client->ps.ammo[ other->client->ps.weapon ] = 0; //gets rid of weapon you are holding from:file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/weapon%20dropping.htm
 		other->client->ps.stats[STAT_WEAPONS] &= ~( 1 << other->client->ps.weapon ); //code taken from same place as above
-		other->client->ps.weapon = combinedWeapon;
+		other->client->ps.weapon = combinedWeapon; //brings weapon out into players hand
 	}else{ //else dont change anything
 		other->client->ps.stats[STAT_WEAPONS] |= ( 1 << ent->item->giTag );
 		Add_Ammo( other, ent->item->giTag, quantity );
 	}
-/*figuring out the giTag for each weapon
-	fp = fopen("test.txt", "w+"); 	
-	fprintf(fp, "Gauntlet %d ",WP_GAUNTLET);
-	fprintf(fp, "Nailgun %d ",WP_MACHINEGUN);
-	fprintf(fp, "Shotgun %d ",WP_SHOTGUN);
-	fprintf(fp, "Railgun %d ",WP_RAILGUN);
-	fprintf(fp, "Lightning %d ",WP_LIGHTNING);
-	fprintf(fp, "Grenade launcher %d ",WP_GRENADE_LAUNCHER);
-	fprintf(fp, "Rocket Launcher %d ",WP_ROCKET_LAUNCHER);
-	fprintf(fp, "Plasma gun %d ",WP_PLASMAGUN);
-	fprintf(fp, "Shotgun %d ",WP_SHOTGUN);
-	fprintf(fp, "BFG %d ",WP_BFG);
-	fprintf(fp, "Grappling hook %d ",WP_GRAPPLING_HOOK);
-//	fprintf(fp, "Proximity launcher %d ",WP_PROX_LAUNCHER);
-//	fprintf(fp, "Chaingun %d ",WP_CHAINGUN);
-	fclose(fp);
-
-*/
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		if (ent->item->giTag == WP_GRAPPLING_HOOK)
@@ -337,6 +351,8 @@ int combinedWeapon;
 
 
 //======================================================================
+
+
 
 int Pickup_Health (gentity_t *ent, gentity_t *other) {
 	int			max;
