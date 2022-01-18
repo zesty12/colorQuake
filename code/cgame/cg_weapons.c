@@ -1206,6 +1206,12 @@ static void CG_AddWeaponWithPowerups( refEntity_t *gun, int powerups ) {
 			gun->customShader = cgs.media.quadWeaponShader;
 			trap_R_AddRefEntityToScene( gun );
 		}
+		//++++++++++MJL+++++++++++++++++++++++++++++
+   if ( powerups & ( 1 << PW_POISONED ) ) {
+            gun->customShader = cgs.media.poisonedWeaponShader;
+          trap_R_AddRefEntityToScene( gun );
+     }
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	}
 }
 

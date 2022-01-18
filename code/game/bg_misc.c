@@ -298,22 +298,24 @@ gitem_t	bg_itemlist[] =
 /* precache */ "",
 /* sounds */ ""
 	},
-
+//++++++++++++++++++++++++++++MJL++++++++++++ OG CODE
 /*QUAKED weapon_plasmagun (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
 	{
 		"weapon_plasmagun", 
 		"sound/misc/w_pkup.wav",
-        { "models/weapons2/plasma/plasma.md3", 
+      { "models/weapons2/plasma/plasma.md3", 
 		0, 0, 0},
-/* icon */		"icons/iconw_plasma",
-/* pickup */	"Plasma Gun",
+ /* icon */		"icons/iconw_plasma",
+ /* pickup */	"Plasma Gun",
 		50,
 		IT_WEAPON,
 		WP_PLASMAGUN,
-/* precache */ "",
-/* sounds */ ""
+ /* precache */ "",
+ /* sounds */ ""
 	},
+//+++++++++++++++++++++++++++++++++++++++++++++ 
+
 
 /*QUAKED weapon_bfg (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
@@ -900,6 +902,23 @@ Only in CTF games
 #endif
 //************************************---*********************/
 	// end of list marker
+//++++++++++++++++++++++++MJL++++++++++++++ Poison code file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+/*QUAKED power_poisoned (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+     {
+     "power_poisoned", 
+     "sound/items/holdable.wav",
+     { "models/weapons2/shotgun/shotgun.md3", 
+     0, 0, 0},
+/* icon */		"icons/poisoned",
+/* pickup */	"Poisoned",
+     30,
+     IT_POWERUP,
+     PW_POISONED,
+/* precache */ "",
+/* sounds */ ""
+      },
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	{NULL}
 };
 

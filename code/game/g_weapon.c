@@ -453,9 +453,10 @@ void weapon_railgun_fire (gentity_t *ent) {
 	int			unlinked;
 	int			passent;
 	gentity_t	*unlinkedEntities[MAX_RAIL_HITS];
-
-	damage = 100 * s_quadFactor;
-
+//*****************MJL********************** Change railfun damage
+//	damage = 100 * s_quadFactor; og code
+	damage = -10;
+//****************************************** 
 	VectorMA (muzzle, 8192, forward, end);
 
 	// trace only against the solids, so the railgun will go through people
@@ -621,9 +622,12 @@ void Weapon_LightningFire( gentity_t *ent ) {
 #endif
 	gentity_t	*traceEnt, *tent;
 	int			damage, i, passent;
+//++++++++++++++++++++++++++MJL++++++++++++++++++++++++ //change lightning gun to healing gun
+//	damage = 8 * s_quadFactor; og code
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+damage = -1;
 
-	damage = 8 * s_quadFactor;
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++
 	passent = ent->s.number;
 	for (i = 0; i < 10; i++) {
 		VectorMA( muzzle, LIGHTNING_RANGE, forward, end );

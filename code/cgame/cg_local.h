@@ -771,7 +771,10 @@ typedef struct {
 	qhandle_t	hastePuffShader;
 	qhandle_t	redKamikazeShader;
 	qhandle_t	blueKamikazeShader;
-
+	//+++++++++++MJL+++++++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+  qhandle_t	poisonedShader;
+     qhandle_t	poisonedWeaponShader;
+	//+++++++++++++++++++++++++++++++++++++
 	// weapon effect models
 	qhandle_t	bulletFlashModel;
 	qhandle_t	ringFlashModel;

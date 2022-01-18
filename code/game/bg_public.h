@@ -298,6 +298,11 @@ typedef enum {
 	PW_AMMOREGEN,
 	PW_INVULNERABILITY,
 //********---**************************************/
+
+//+++++++++++++++++++++++MJL+++++++++++++++++++++++++ code from file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+PW_POISON,
+PW_POISONED,
+//++++++++++++++++++++++++++++++++++++++++++++++++
 	PW_NUM_POWERUPS
 
 } powerup_t;
@@ -614,7 +619,11 @@ typedef enum {
 	MOD_KAMIKAZE,
 	MOD_JUICED,
 #endif
-	MOD_GRAPPLE
+	MOD_GRAPPLE,
+
+//++++++++++++++MJL++++++++++++++++ code from file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+MOD_POISON
+//+++++++++++++++++++++++++++++++++++
 } meansOfDeath_t;
 
 

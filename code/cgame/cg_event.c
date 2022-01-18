@@ -318,6 +318,12 @@ static void CG_Obituary( entityState_t *ent ) {
 			message = "tried to invade";
 			message2 = "'s personal space";
 			break;
+//+++++++++++++++++MJL++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+		case MOD_POISON:
+               message = "was infected by";
+               break;
+
+//++++++++++++++++++++++++++++++++++++++++
 		default:
 			message = "was killed by";
 			break;

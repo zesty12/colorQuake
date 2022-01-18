@@ -295,7 +295,9 @@ struct gclient_s {
 	int			lastkilled_client;	// last client that this client killed
 	int			lasthurt_client;	// last client that damaged this client
 	int			lasthurt_mod;		// type of damage the client did
-
+//+++++++++++++++++++++MJL++++++++++++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%203.htm
+	 int			lastpoison_client;	//last client that poisoned this client
+//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	// timers
 	int			respawnTime;		// can respawn when time > this, force after g_forcerespwan
 	int			inactivityTime;		// kick players when time > this

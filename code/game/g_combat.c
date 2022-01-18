@@ -314,7 +314,10 @@ char	*modNames[] = {
 	"MOD_KAMIKAZE",
 	"MOD_JUICED",
 #endif
-	"MOD_GRAPPLE"
+	"MOD_GRAPPLE",
+	//+++++++++++MJL++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%203.htm
+"MOD_POISON"
+//++++++++++++++++++++++++++++++
 };
 
 #ifdef MISSIONPACK
@@ -1004,17 +1007,24 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	if ( targ == attacker) {
 		damage *= 0.5;
 	}
+//+++++++++++++++++MJL++++++++++++++++++ stopped damage from being set to 1 if x<0;
+	//if ( damage < 1 ) { og code
+	//	damage = 1;
+	//}
 
-	if ( damage < 1 ) {
+	if ( (damage < 1) && (damage > 0)) {
 		damage = 1;
 	}
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	take = damage;
 	save = 0;
 
 	// save some from armor
+//+++++++++++++++++MJL++++++++++++++++++ stop healing from healing armor
+	if (damage > 0){ //mjl
 	asave = CheckArmor (targ, take, dflags);
 	take -= asave;
-
+	}
 	if ( g_debugDamage.integer ) {
 		G_Printf( "%i: client:%i health:%i damage:%i armor:%i\n", level.time, targ->s.number,
 			targ->health, take, asave );
@@ -1075,6 +1085,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			return;
 		} else if ( targ->pain ) {
 			targ->pain (targ, attacker, take);
+		}
+	}
+
+	if(attacker->s.weapon == WP_PLASMAGUN){
+		if(targ->client->ps.powerups[PW_POISON] == 0){
+targ->client->ps.powerups[PW_POISON] = level.time+100000;
+
 		}
 	}
 
