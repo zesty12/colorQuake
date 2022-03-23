@@ -298,22 +298,24 @@ gitem_t	bg_itemlist[] =
 /* precache */ "",
 /* sounds */ ""
 	},
-
+//++++++++++++++++++++++++++++MJL++++++++++++ OG CODE
 /*QUAKED weapon_plasmagun (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
 	{
 		"weapon_plasmagun", 
 		"sound/misc/w_pkup.wav",
-        { "models/weapons2/plasma/plasma.md3", 
+      { "models/weapons2/plasma/plasma.md3", 
 		0, 0, 0},
-/* icon */		"icons/iconw_plasma",
-/* pickup */	"Plasma Gun",
+ /* icon */		"icons/iconw_plasma",
+ /* pickup */	"Plasma Gun",
 		50,
 		IT_WEAPON,
 		WP_PLASMAGUN,
-/* precache */ "",
-/* sounds */ ""
+ /* precache */ "",
+ /* sounds */ ""
 	},
+//+++++++++++++++++++++++++++++++++++++++++++++ 
+
 
 /*QUAKED weapon_bfg (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
@@ -534,6 +536,26 @@ gitem_t	bg_itemlist[] =
 /* precache */ "",
 /* sounds */ "sound/items/damage2.wav sound/items/damage3.wav"
 	},
+
+
+	//+++++++++++++++++++++++++MJL++++++++++++++++++++
+	/*QUAKED item_exdam (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"item_EXDAM", 
+		"sound/items/quaddamage.wav",
+        { "models/powerups/instant/quad.md3", 
+        "models/powerups/instant/quad_ring.md3",
+		0, 0 },
+/* icon */		"icons/quad",
+/* pickup */	"Extra Damage",
+		30,
+		IT_POWERUP,
+		PW_EXDAM,
+/* precache */ "",
+/* sounds */ "sound/items/damage2.wav sound/items/damage3.wav"
+	},
+	//++++++++++++++++++++++++++++++++++++++++++++++
 
 /*QUAKED item_enviro (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
@@ -900,6 +922,23 @@ Only in CTF games
 #endif
 //************************************---*********************/
 	// end of list marker
+//++++++++++++++++++++++++MJL++++++++++++++ Poison code file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+/*QUAKED power_poisoned (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+     {
+     "power_poisoned", 
+     "sound/items/holdable.wav",
+     { "models/weapons2/shotgun/shotgun.md3", 
+     0, 0, 0},
+/* icon */		"icons/poisoned",
+/* pickup */	"Poisoned",
+     30,
+     IT_POWERUP,
+     PW_POISONED,
+/* precache */ "",
+/* sounds */ ""
+      },
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	{NULL}
 };
 
@@ -1348,6 +1387,8 @@ char *eventnames[] = {
 	"EV_POWERUP_QUAD",
 	"EV_POWERUP_BATTLESUIT",
 	"EV_POWERUP_REGEN",
+	"EV_POWERUP_POISONED,"
+	"EV_POWERUP_EXDAM",
 
 	"EV_GIB_PLAYER",			// gib a previously living player
 	"EV_SCOREPLUM",			// score plum

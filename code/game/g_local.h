@@ -295,7 +295,9 @@ struct gclient_s {
 	int			lastkilled_client;	// last client that this client killed
 	int			lasthurt_client;	// last client that damaged this client
 	int			lasthurt_mod;		// type of damage the client did
-
+//+++++++++++++++++++++MJL++++++++++++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%203.htm
+	 int			lastpoison_client;	//last client that poisoned this client
+//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	// timers
 	int			respawnTime;		// can respawn when time > this, force after g_forcerespwan
 	int			inactivityTime;		// kick players when time > this
@@ -524,6 +526,9 @@ gentity_t *fire_blaster (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t aimdir);
 gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir);
+//++++++++++++++MJL++++++++++++++++++++++++++++
+gentity_t *fire_brokenrocket (gentity_t *self, vec3_t start, vec3_t dir);
+//++++++++++++++++++++++++++++++++++++++++++++
 gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_grapple (gentity_t *self, vec3_t start, vec3_t dir);
 #ifdef MISSIONPACK

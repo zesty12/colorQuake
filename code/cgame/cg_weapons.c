@@ -1206,6 +1206,12 @@ static void CG_AddWeaponWithPowerups( refEntity_t *gun, int powerups ) {
 			gun->customShader = cgs.media.quadWeaponShader;
 			trap_R_AddRefEntityToScene( gun );
 		}
+		//++++++++++MJL+++++++++++++++++++++++++++++
+   if ( powerups & ( 1 << PW_POISONED ) ) {
+            gun->customShader = cgs.media.poisonedWeaponShader;
+          trap_R_AddRefEntityToScene( gun );
+     }
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	}
 }
 
@@ -1859,7 +1865,10 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		shader = cgs.media.plasmaExplosionShader;
 		sfx = cgs.media.sfx_plasmaexp;
 		mark = cgs.media.energyMarkShader;
-		radius = 16;
+		//++++++++++++++++++++++++++ mjl
+		//radius = 16; OG code
+		//+++++++++++++++++++++++++++
+		radius = 300;
 		break;
 	case WP_BFG:
 		mod = cgs.media.dishFlashModel;

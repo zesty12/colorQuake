@@ -184,7 +184,7 @@ int Pickup_PersistantPowerup( gentity_t *ent, gentity_t *other ) {
 		if( handicap<=0.0f || handicap>100.0f) {
 			handicap = 100.0f;
 		}
-		other->client->pers.maxHealth = handicap;
+//		other->client->pers.maxHealth = handicap;
 		break;
 	}
 
@@ -329,6 +329,10 @@ int combinedWeapon;
 	}
 	if (combinedWeapon != 0){ //checks if weapon can succesfully combine
 		other->client->ps.stats[STAT_WEAPONS] |= ( 1 << combinedWeapon); //changes weapon to combined weapon
+//++++++++++++++++++++++++++++++++++++++++TEST++++++++++++++++++++++++++++++
+	if (combinedWeapon == WP_LIGHTNING)
+	quantity = 50;
+		//++++++++++++++++++++++++++++++++++++++++++++++
 		Add_Ammo( other, combinedWeapon, quantity ); //adds ammo to comined weapon
 		other->client->ps.ammo[ other->client->ps.weapon ] = 0; //gets rid of weapon you are holding from:file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/weapon%20dropping.htm
 		other->client->ps.stats[STAT_WEAPONS] &= ~( 1 << other->client->ps.weapon ); //code taken from same place as above
@@ -886,6 +890,8 @@ void ClearRegisteredItems( void ) {
 	// players always start with the base weapon
 	RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 	RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
+	RegisterItem( BG_FindItemForWeapon( PW_POISONED ) );
+
 #ifdef MISSIONPACK
 	if( g_gametype.integer == GT_HARVESTER ) {
 		RegisterItem( BG_FindItem( "Red Cube" ) );

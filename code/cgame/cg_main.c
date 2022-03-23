@@ -885,6 +885,11 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.invisShader = trap_R_RegisterShader("powerups/invisibility" );
 	cgs.media.regenShader = trap_R_RegisterShader("powerups/regen" );
 	cgs.media.hastePuffShader = trap_R_RegisterShader("hasteSmokePuff" );
+	//++++++++++++++++++++++++MJL+++++++++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+cgs.media.poisonedShader = trap_R_RegisterShader("powerups/poisoned");
+     cgs.media.poisonedWeaponShader = trap_R_RegisterShader("powerups/poisonedWeapon");
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #ifdef MISSIONPACK
 	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {

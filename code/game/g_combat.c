@@ -291,7 +291,10 @@ char	*modNames[] = {
 	"MOD_GRENADE",
 	"MOD_GRENADE_SPLASH",
 	"MOD_ROCKET",
-	"MOD_ROCKET_SPLASH",
+   	"MOD_ROCKET_SPLASH",
+	//+++++++++++++MJL++++++++++++
+	"MOD_BROKENROCKET",
+	//++++++++++++++++++++++++++++
 	"MOD_PLASMA",
 	"MOD_PLASMA_SPLASH",
 	"MOD_RAILGUN",
@@ -314,7 +317,10 @@ char	*modNames[] = {
 	"MOD_KAMIKAZE",
 	"MOD_JUICED",
 #endif
-	"MOD_GRAPPLE"
+	"MOD_GRAPPLE",
+	//+++++++++++MJL++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%203.htm
+"MOD_POISON"
+//++++++++++++++++++++++++++++++
 };
 
 #ifdef MISSIONPACK
@@ -836,6 +842,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	int			asave;
 	int			knockback;
 	int			max;
+	
 #ifdef MISSIONPACK
 	vec3_t		bouncedir, impactpoint;
 #endif
@@ -984,6 +991,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		}
 		damage *= 0.5;
 	}
+	if ( client && client->ps.powerups[PW_EXDAM] ) {
+		G_AddEvent( targ, EV_POWERUP_EXDAM, 0 );
+		if ( ( dflags & DAMAGE_RADIUS ) || ( mod == MOD_FALLING ) ) {
+			return;
+		}
+		damage *= 1.5;
+	}
 
 	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
 	if ( attacker->client && targ != attacker && targ->health > 0
@@ -1002,19 +1016,26 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	// always give half damage if hurting self
 	// calculated after knockback, so rocket jumping works
 	if ( targ == attacker) {
-		damage *= 0.5;
+		damage *= 0.1;
 	}
+//+++++++++++++++++MJL++++++++++++++++++ stopped damage from being set to 1 if x<0;
+	//if ( damage < 1 ) { og code
+	//	damage = 1;
+	//}
 
-	if ( damage < 1 ) {
+	if ( (damage < 1) && (damage > 0)) {
 		damage = 1;
 	}
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	take = damage;
 	save = 0;
 
 	// save some from armor
+//+++++++++++++++++MJL++++++++++++++++++ stop healing from healing armor
+	if (damage > 0){ //mjl
 	asave = CheckArmor (targ, take, dflags);
 	take -= asave;
-
+	}
 	if ( g_debugDamage.integer ) {
 		G_Printf( "%i: client:%i health:%i damage:%i armor:%i\n", level.time, targ->s.number,
 			targ->health, take, asave );
@@ -1076,7 +1097,17 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		} else if ( targ->pain ) {
 			targ->pain (targ, attacker, take);
 		}
+			if(attacker->s.weapon == WP_PLASMAGUN){
+		//if(!targ->client->ps.powerups[PW_POISONED]){
+targ->client->ps.powerups[PW_POISONED] = level.time + 10000;
+
+		//}
+	
 	}
+
+	}
+
+
 
 }
 

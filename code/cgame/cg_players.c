@@ -1845,6 +1845,12 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_QUAD ) ) {
 		trap_R_AddLightToScene( cent->lerpOrigin, 200 + (rand()&31), 0.2f, 0.2f, 1 );
 	}
+	//+++++++++++++++++++++MJL++++++++++++++++++++++++++++ poisoned file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+	// poison gives a dlight
+     if ( powerups & ( 1 << PW_POISONED ) ) {
+          trap_R_AddLightToScene( cent->lerpOrigin, 200 + (rand()&31), 0.2f, 1, 0.2f );
+     }
+	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	// flight plays a looped sound
 	if ( powerups & ( 1 << PW_FLIGHT ) ) {
@@ -2178,6 +2184,12 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			ent->customShader = cgs.media.battleSuitShader;
 			trap_R_AddRefEntityToScene( ent );
 		}
+		//+++++++++++++++++++++++MJL+++++++++++++++++++ file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+		 if ( state->powerups & ( 1 << PW_POISONED ) ) {
+          ent->customShader = cgs.media.poisonedShader;
+          trap_R_AddRefEntityToScene( ent );
+     }
+		 //+++++++++++++++++++++++++++++++++++++++++++++++
 	}
 }
 

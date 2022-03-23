@@ -532,7 +532,10 @@ gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->s.weapon = WP_PLASMAGUN;
 	bolt->r.ownerNum = self->s.number;
 	bolt->parent = self;
-	bolt->damage = 20;
+	//++++++++++++++ MJL+++++++++++++++++
+	//bolt->damage = 20; OG code
+	bolt->damage = 1;
+	//+++++++++++++++++++++++++++++++++++
 	bolt->splashDamage = 15;
 	bolt->splashRadius = 20;
 	bolt->methodOfDeath = MOD_PLASMA;
@@ -648,16 +651,21 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	bolt = G_Spawn();
 	bolt->classname = "rocket";
-	bolt->nextthink = level.time + 15000;
+	bolt->nextthink = level.time + 150000;
 	bolt->think = G_ExplodeMissile;
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
 	bolt->s.weapon = WP_ROCKET_LAUNCHER;
 	bolt->r.ownerNum = self->s.number;
 	bolt->parent = self;
-	bolt->damage = 100;
-	bolt->splashDamage = 100;
-	bolt->splashRadius = 120;
+	//MJL++++++++++++++++++++ OG code
+//	bolt->damage = 100;
+//	bolt->splashDamage = 100;
+//	bolt->splashRadius = 120;
+	//+++++++++++++++++++++++++++
+    bolt->damage = 200;
+	bolt->splashDamage = 200;
+	bolt->splashRadius = 240;
 	bolt->methodOfDeath = MOD_ROCKET;
 	bolt->splashMethodOfDeath = MOD_ROCKET_SPLASH;
 	bolt->clipmask = MASK_SHOT;
@@ -676,6 +684,53 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	return bolt;
 }
 
+/*
+=================
+fire_brokenrocket MJL
+================= +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+gentity_t *fire_brokenrocket (gentity_t *self, vec3_t start, vec3_t dir) {
+	gentity_t	*bolt;
+
+	VectorNormalize (dir);
+
+	bolt = G_Spawn();
+	bolt->classname = "rocket";
+	//++++++++++++MJL++++++++++++
+	//bolt->nextthink = level.time + 15000; OG code
+	//+++++++++++++++++++++++++++
+	bolt->nextthink = level.time;
+	bolt->think = G_ExplodeMissile;
+	bolt->s.eType = ET_MISSILE;
+	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+	bolt->s.weapon = WP_ROCKET_LAUNCHER;
+	bolt->r.ownerNum = self->s.number;
+	bolt->parent = self;
+	 bolt->damage = 10000;
+	bolt->splashDamage = 10000;
+	bolt->splashRadius = 100;
+	bolt->methodOfDeath = MOD_BROKENROCKET;
+	bolt->splashMethodOfDeath = MOD_BROKENROCKET;
+	bolt->clipmask = MASK_SHOT;
+	bolt->target_ent = NULL;
+
+	bolt->s.pos.trType = TR_LINEAR;
+	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
+	VectorCopy( start, bolt->s.pos.trBase );
+	//VectorScale( dir, 900, bolt->s.pos.trDelta );
+//******************************************************************
+	VectorScale( dir, 900, bolt->s.pos.trDelta );
+//******************************************************************
+	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
+	VectorCopy (start, bolt->r.currentOrigin);
+
+	return bolt;
+}
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++
 /*
 =================
 fire_grapple

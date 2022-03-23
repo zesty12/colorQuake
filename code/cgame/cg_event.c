@@ -172,6 +172,14 @@ static void CG_Obituary( entityState_t *ent ) {
 			else
 				message = "blew himself up";
 			break;
+		case MOD_BROKENROCKET:
+			if ( gender == GENDER_FEMALE )
+				message = "missfired and blew herself up";
+			else if ( gender == GENDER_NEUTER )
+				message = "missfired and blew itself up";
+			else
+				message = "missfired and blew himself up";
+			break;
 		case MOD_PLASMA_SPLASH:
 			if ( gender == GENDER_FEMALE )
 				message = "melted herself";
@@ -275,6 +283,11 @@ static void CG_Obituary( entityState_t *ent ) {
 			message = "almost dodged";
 			message2 = "'s rocket";
 			break;
+			//++++++++++++MJL+++++++++++
+	case MOD_BROKENROCKET:
+			message = "got caught in the blast";
+			break;
+			//++++++++++++++++++++++++++
 		case MOD_PLASMA:
 			message = "was melted by";
 			message2 = "'s plasmagun";
@@ -318,6 +331,12 @@ static void CG_Obituary( entityState_t *ent ) {
 			message = "tried to invade";
 			message2 = "'s personal space";
 			break;
+//+++++++++++++++++MJL++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%202.htm
+		case MOD_POISONED:
+               message = "was infected by";
+               break;
+
+//++++++++++++++++++++++++++++++++++++++++
 		default:
 			message = "was killed by";
 			break;
@@ -1142,8 +1161,23 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			cg.powerupTime = cg.time;
 		}
 		trap_S_StartSound (NULL, es->number, CHAN_ITEM, cgs.media.regenSound );
+		//++++++++++++++MJL+++++++++++++++++++
+	case EV_POWERUP_POISONED:
+		DEBUGNAME("EV_POWERUP_POSION");
+		if ( es->number == cg.snap->ps.clientNum ) {
+			cg.powerupActive = PW_POISONED;
+			cg.powerupTime = cg.time;
+		}
+		trap_S_StartSound (NULL, es->number, CHAN_ITEM, cgs.media.regenSound );
 		break;
-
+case EV_POWERUP_EXDAM:
+		DEBUGNAME("EV_POWERUP_EXDAM");
+		if ( es->number == cg.snap->ps.clientNum ) {
+			cg.powerupActive = PW_EXDAM;
+			cg.powerupTime = cg.time;
+		}
+		trap_S_StartSound (NULL, es->number, CHAN_ITEM, cgs.media.regenSound );
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	case EV_GIB_PLAYER:
 		DEBUGNAME("EV_GIB_PLAYER");
 		// don't play gib sound when using the kamikaze because it interferes

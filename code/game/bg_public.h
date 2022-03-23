@@ -298,6 +298,13 @@ typedef enum {
 	PW_AMMOREGEN,
 	PW_INVULNERABILITY,
 //********---**************************************/
+
+//+++++++++++++++++++++++MJL+++++++++++++++++++++++++ code from file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+PW_POISON,
+PW_POISONED,
+//++++++++++++++++++++++++++++++++++++++++++++++++
+PW_EXDAM,
+//++++++++++++++++++++++++++++++++++++++++++++++++
 	PW_NUM_POWERUPS
 
 } powerup_t;
@@ -438,6 +445,10 @@ typedef enum {
 	EV_POWERUP_QUAD,
 	EV_POWERUP_BATTLESUIT,
 	EV_POWERUP_REGEN,
+	//+++++++++++++++++++++MJL++++
+	EV_POWERUP_EXDAM,
+	EV_POWERUP_POISONED,
+	//++++++++++++++++++++++++++++
 
 	EV_GIB_PLAYER,			// gib a previously living player
 	EV_SCOREPLUM,			// score plum
@@ -592,6 +603,9 @@ typedef enum {
 	MOD_GRENADE_SPLASH,
 	MOD_ROCKET,
 	MOD_ROCKET_SPLASH,
+	//+++++++++MJL++++++++++
+	MOD_BROKENROCKET,
+	//++++++++++++++++++++++++
 	MOD_PLASMA,
 	MOD_PLASMA_SPLASH,
 	MOD_RAILGUN,
@@ -614,7 +628,11 @@ typedef enum {
 	MOD_KAMIKAZE,
 	MOD_JUICED,
 #endif
-	MOD_GRAPPLE
+	MOD_GRAPPLE,
+
+//++++++++++++++MJL++++++++++++++++ code from file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%201.htm
+MOD_POISONED
+//+++++++++++++++++++++++++++++++++++
 } meansOfDeath_t;
 
 

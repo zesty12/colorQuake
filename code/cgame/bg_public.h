@@ -217,6 +217,8 @@ typedef enum {
 	PW_INVIS,
 	PW_REGEN,
 	PW_FLIGHT,
+	PW_POISON,
+	PW_EXDAM
 
 	PW_REDFLAG,
 	PW_BLUEFLAG,
@@ -356,6 +358,8 @@ typedef enum {
 	EV_POWERUP_QUAD,
 	EV_POWERUP_BATTLESUIT,
 	EV_POWERUP_REGEN,
+	EV_POWERUP_POSION
+	EV_POWERUP_EXDAM
 
 	EV_GIB_PLAYER,			// gib a previously living player
 
@@ -445,6 +449,9 @@ typedef enum {
 	MOD_GRENADE_SPLASH,
 	MOD_ROCKET,
 	MOD_ROCKET_SPLASH,
+	//+++++++++++MJL+++++++++++
+	MOD_BROKENROCKET
+	//+++++++++++++++++++++++++
 	MOD_PLASMA,
 	MOD_PLASMA_SPLASH,
 	MOD_RAILGUN,

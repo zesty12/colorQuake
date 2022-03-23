@@ -396,11 +396,29 @@ ROCKET
 */
 
 void Weapon_RocketLauncher_Fire (gentity_t *ent) {
+	int num = 0;
 	gentity_t	*m;
+    num = rand() % 10 + 1; 
+//mjl+
+	if(num == 7){
+	m = fire_brokenrocket (ent, muzzle, forward);
+	m->damage *= s_quadFactor;
+	m->splashDamage *= s_quadFactor;
 
+	}else{
 	m = fire_rocket (ent, muzzle, forward);
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
+	}
+//+++++++++++++++++++++++++++++++
+
+
+	//MJL+++++++++++++++++++++++++++++++++
+	//m = fire_rocket (ent, muzzle, forward);
+	//m->damage *= s_quadFactor;
+	//m->splashDamage *= s_quadFactor;
+    //+++++++++++++++++++++++++++++++++++++++++
+
 
 //	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
@@ -453,9 +471,10 @@ void weapon_railgun_fire (gentity_t *ent) {
 	int			unlinked;
 	int			passent;
 	gentity_t	*unlinkedEntities[MAX_RAIL_HITS];
-
-	damage = 100 * s_quadFactor;
-
+//*****************MJL********************** Change railfun damage
+//	damage = 100 * s_quadFactor; og code
+	damage = -10;
+//****************************************** 
 	VectorMA (muzzle, 8192, forward, end);
 
 	// trace only against the solids, so the railgun will go through people
@@ -621,9 +640,12 @@ void Weapon_LightningFire( gentity_t *ent ) {
 #endif
 	gentity_t	*traceEnt, *tent;
 	int			damage, i, passent;
+//++++++++++++++++++++++++++MJL++++++++++++++++++++++++ //change lightning gun to healing gun
+//	damage = 8 * s_quadFactor; og code
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+damage = -1;
 
-	damage = 8 * s_quadFactor;
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++
 	passent = ent->s.number;
 	for (i = 0; i < 10; i++) {
 		VectorMA( muzzle, LIGHTNING_RANGE, forward, end );

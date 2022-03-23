@@ -455,6 +455,16 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 				G_AddEvent( ent, EV_POWERUP_REGEN, 0 );
 			}
 #endif
+	//+++++++++++++MJL+++++++++++++++++++ poison file:///C:/ygpip/q3tools/q3tools/Q3%20tutorials/Coding%20Poison%20Part%203.htm
+			} else if ( client->ps.powerups[PW_POISONED] ) {
+          gentity_t *attacker;
+          attacker = &g_entities[ ent->client->lastpoison_client ];
+//          G_Damage( ent, attacker, attacker, NULL, NULL,
+  //             5, 0, MOD_POISONED );
+
+			ent->health-= 2;
+
+		  //++++++++++++++++++++++++++++++++++++
 		} else {
 			// count down health when over max
 			if ( ent->health > client->ps.stats[STAT_MAX_HEALTH] ) {
